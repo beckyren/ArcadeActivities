@@ -26,6 +26,7 @@ class YourGameClassRenameThis(arcade.Window):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
 
 
+
 def main():
     window = YourGameClassRenameThis()
     window.setup()

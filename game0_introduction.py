@@ -15,11 +15,9 @@ NEXT_PHASE = {
     'spinning backward': 'waiting again',
     'waiting again': 'spinning forward'
     }
-
-
 class Cisc108Logo(arcade.Sprite):
-    phase: str
-    timer: int
+    #phase: str
+    #timer: int
 
     def __init__(self):
         super().__init__("images/cisc108_banner.png")
@@ -27,6 +25,8 @@ class Cisc108Logo(arcade.Sprite):
         self.timer = 0
         self.center_x = WINDOW_WIDTH/2
         self.center_y = WINDOW_HEIGHT/2
+        self.scale=0.5
+
 
     def update_timer(self):
         if self.timer < TIMER_MAXIMUM:
@@ -40,7 +40,7 @@ class Cisc108Logo(arcade.Sprite):
         if self.phase == 'spinning forward':
             self.angle = 360 * progress
         elif self.phase == 'spinning backward':
-            self.angle = 360 * (1 - progress)
+            self.angle = 360 * (1-progress)
         else:
             self.angle = 0
 
