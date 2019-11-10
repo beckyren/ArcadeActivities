@@ -1,17 +1,20 @@
 import arcade
 
+from random import randint
+
 
 # Define constants
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
-BACKGROUND_COLOR = arcade.color.BLACK
+BACKGROUND_COLOR = arcade.color.ANDROID_GREEN
 GAME_TITLE = "Introduction"
-GAME_SPEED = 1/60
 NEXT_PHASE={
     'ada':'potato',
     'potato':'ada'
 }
 TIMER_MAXIMUM = 100
+print("Hello, make sure to only click Ada! If you click the green space you won't get points off(mostly), \n"
+      "but if you click the potato I will deduct a point!")
 
 
 class Ada_Or_Potato(arcade.Window):
@@ -50,14 +53,21 @@ class Ada_Or_Potato(arcade.Window):
 
     def update_timer(self):
         if self.timer < TIMER_MAXIMUM:
-            self.timer += 1
+            self.timer += randint(0,1)*randint(1,6)
+            #Ohhh I finally get it, the self timer adds up quicker with bigger maxes in randint
         else:
             self.timer = 0
             self.phase = NEXT_PHASE[self.phase]
 
-
-
-
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self.phase=='ada' and button == arcade.MOUSE_BUTTON_LEFT:
+            if (x<self.ada.points[1][0]-10 and x>self.ada.points[0][0]+10) and (y<self.ada.points[3][1]-30 and y>self.ada.points[1][1]+30):
+                self.score+=1
+                print("Added 1 to your score\nScore is now: ",str(self.score))
+        elif self.phase=='potato' and button ==arcade.MOUSE_BUTTON_LEFT:
+            if(x<self.potato.points[1][0] and x>self.potato.points[0][0]) and (y<self.potato.points[2][1]-10 and y>self.potato.points[0][1]+10):
+                self.score-=1
+                print("Subtracted 1 from your score\nScore is now: ",str(self.score))
 
 def main():
     window = Ada_Or_Potato()
