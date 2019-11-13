@@ -2,12 +2,14 @@ import arcade
 
 
 # Define constants
-WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 600
+WINDOW_WIDTH = 500
+WINDOW_HEIGHT = 500
 BACKGROUND_IMG = "images/game_background.png"
 GAME_TITLE = "Meteor Garden"
 GAME_SPEED = 1/60
-
+class meteors(arcade.Sprite):
+    def __init__(self):
+        pass
 
 class MeteorGarden(arcade.Window):
     def __init__(self):
@@ -21,6 +23,8 @@ class MeteorGarden(arcade.Window):
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
+        arcade.draw_texture_rectangle(WINDOW_WIDTH//2, WINDOW_HEIGHT//2,
+                                      WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         #draw_text
         #Physics engine
 
