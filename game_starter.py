@@ -7,9 +7,13 @@ WINDOW_HEIGHT = 500
 BACKGROUND_IMG = "images/game_background.png"
 GAME_TITLE = "Meteor Garden"
 GAME_SPEED = 1/60
-class meteors(arcade.Sprite):
+character_speed=5
+class Character(arcade.Sprite):
     def __init__(self):
-        pass
+        super().__init__("images/cisc108_banner.png")
+        self.center_x = WINDOW_WIDTH / 2
+        self.center_y = WINDOW_HEIGHT / 2
+        self.scale = 0.5
 
 class MeteorGarden(arcade.Window):
     def __init__(self):
