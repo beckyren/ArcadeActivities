@@ -16,8 +16,8 @@ NEXT_PHASE = {
     'waiting again': 'spinning forward'
     }
 class Cisc108Logo(arcade.Sprite):
-    #phase: str
-    #timer: int
+    phase: str
+    timer: int
 
     def __init__(self):
         super().__init__("images/cisc108_banner.png")
