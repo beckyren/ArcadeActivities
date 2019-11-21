@@ -1,5 +1,4 @@
 import arcade
-import pymunk
 #Remember to credit authors
 
 
@@ -57,7 +56,7 @@ class MeteorGarden(arcade.Window):
     def __init__(self):
         """ Initialize variables """
         super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
-
+        self.platform_list = None
 
 
 
@@ -65,9 +64,15 @@ class MeteorGarden(arcade.Window):
         """ Setup the game (or reset the game) """
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
-        '''self.physics=arcade.PhysicsEnginePlatformer(self.player_sprite,
-                                           self.all_wall_list,
-                                           gravity_constant=GRAVITY)'''
+        self.platform_list = arcade.SpriteList()
+        for placement in range(10):
+            wall = arcade.Sprite("images/main_facing_right.png",0.1)
+            wall.bottom = 0
+            wall.center_x = placement * 100
+            self.platform_list.append(wall)
+        self.physics=arcade.PhysicsEnginePlatformer(self.character,
+                                           self.platform_list,
+                                           gravity_constant=0.2)
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
@@ -75,19 +80,23 @@ class MeteorGarden(arcade.Window):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         arcade.draw_text("Enter your name",WINDOW_WIDTH/3,WINDOW_HEIGHT/3,arcade.color.LIGHT_CRIMSON)
+        self.static_wall_list.draw()
+        self.moving_wall_list.draw()
         #draw_text
         #Physics engine
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
+        self.physics.update()
     def on_key_press(self, key, modifiers: int):
         if key==arcade.key.LEFT:
             self.character.change_x=-character_speed
         elif key==arcade.key.RIGHT:
             self.character.change_x=character_speed
         elif key==arcade.key.UP:
-            self.character.change_y=character_speed
+            if self.physics.can_jump():
+                self.character.change_y=character_speed
 
     def on_key_release(self, key, modifiers: int):#nestnig no
         if key==arcade.key.UP:
