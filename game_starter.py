@@ -15,6 +15,7 @@ FACING_LEFT=1
 
 class Character(arcade.Sprite):
     def __init__(self):
+
         super().__init__()
         self.center_x = WINDOW_WIDTH / 2
         self.center_y = WINDOW_HEIGHT / 6
@@ -25,6 +26,7 @@ class Character(arcade.Sprite):
         texture = arcade.load_texture("images/main_facing_right.png", scale=self.scale)
         self.textures.append(texture)
         self.set_texture(FACING_RIGHT)
+
 
     def update_animation(self, delta_time: float = 1/60):
         '''code below is from Paul Vincent Craven via http://arcade.academy/examples/sprite_face_left_or_right.html'''
@@ -51,17 +53,21 @@ class Character(arcade.Sprite):
 
 
 class MeteorGarden(arcade.Window):
+
     def __init__(self):
         """ Initialize variables """
         super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
 
-        self.character=None
+
+
 
     def setup(self):
         """ Setup the game (or reset the game) """
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
-
+        '''self.physics=arcade.PhysicsEnginePlatformer(self.player_sprite,
+                                           self.all_wall_list,
+                                           gravity_constant=GRAVITY)'''
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
