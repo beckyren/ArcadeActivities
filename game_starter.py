@@ -59,8 +59,11 @@ class Introduction(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         self.dad.draw()
-        arcade.draw_text("Well honey I'll leave it to you then.\nDad has faith in you, so good luck!",370,210,arcade.color.BLACK)
-        #Other_sprites_sheet.Dad().dad_list.draw()
+        arcade.draw_text("Your objective is to get rid of meteors\n before they touch the garden\n"
+                       "Just touch the meteors with your wand\n before they touch the garden\n"
+                       "Use up, left, right keys to move \nand collect any falling bottles\n"
+                       "Click to start",50,400,arcade.color.ALABAMA_CRIMSON,font_size=18)
+        arcade.draw_text("I'll be back soon but I'll leave this to you.\nDad has faith in you, so good luck!",350,210,arcade.color.BLACK)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         main_level = MeteorGarden()
@@ -90,7 +93,7 @@ class MeteorGarden(arcade.View):
             self.platform_list.append(wall)
         self.physics=arcade.PhysicsEnginePlatformer(self.character,
                                            self.platform_list,
-                                           gravity_constant=0.2)
+                                           gravity_constant=0.25)
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
