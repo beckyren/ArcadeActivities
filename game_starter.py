@@ -28,7 +28,7 @@ class Character(arcade.Sprite):
 
 
     def update_animation(self, delta_time: float = 1/60):
-        '''code below is from Paul Vincent Craven via http://arcade.academy/examples/sprite_face_left_or_right.html'''
+        '''update_animation function is from Paul Vincent Craven via http://arcade.academy/examples/sprite_face_left_or_right.html'''
         self.center_x+=self.change_x
         self.center_y+=self.change_y
         if self.change_x<0:
@@ -42,29 +42,22 @@ class Character(arcade.Sprite):
         if self.top > WINDOW_HEIGHT - 1:
             self.top = WINDOW_HEIGHT - 1
 
-
-
-
-
-
-
-
-
-
-class MeteorGarden(arcade.Window):
+class MeteorGarden(arcade.View):
 
     def __init__(self):
         """ Initialize variables """
-        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
+        super().__init__()
         self.platform_list = None
 
 
 
-    def setup(self):
+    def on_show(self):
         """ Setup the game (or reset the game) """
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
+        '''for loop inspired by Paul Vincent Craven's setup from
+         http://arcade.academy/examples/sprite_moving_platforms.html#sprite-moving-platforms'''
         for placement in range(10):
             wall = arcade.Sprite("images/main_facing_right.png",0.1)
             wall.bottom = 0
@@ -79,11 +72,6 @@ class MeteorGarden(arcade.Window):
         arcade.draw_texture_rectangle(WINDOW_WIDTH//2, WINDOW_HEIGHT//2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
-        arcade.draw_text("Enter your name",WINDOW_WIDTH/3,WINDOW_HEIGHT/3,arcade.color.LIGHT_CRIMSON)
-        self.static_wall_list.draw()
-        self.moving_wall_list.draw()
-        #draw_text
-        #Physics engine
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
@@ -109,8 +97,9 @@ class MeteorGarden(arcade.Window):
 #mouse press:collides with points
 
 def main():
-    window = MeteorGarden()
-    window.setup()
+    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
+    game=MeteorGarden()
+    window.show_view(game)
     arcade.run()
 
 
