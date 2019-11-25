@@ -1,4 +1,5 @@
 import arcade
+import Other_sprites_sheet
 #Remember to credit authors
 
 
@@ -41,6 +42,30 @@ class Character(arcade.Sprite):
             self.left = 0
         if self.top > WINDOW_HEIGHT - 1:
             self.top = WINDOW_HEIGHT - 1
+
+class Introduction(arcade.View):
+    def __init__(self):
+        super().__init__()
+    def on_show(self):
+        self.background=arcade.load_texture(BACKGROUND_IMG)
+        self.character=Character()
+        self.dad = Other_sprites_sheet.Dad().dad
+        self.dad.center_x = 500
+        self.dad.center_y = 120
+
+    def on_draw(self):
+        arcade.start_render()
+        arcade.draw_texture_rectangle(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+                                      WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
+        self.character.draw()
+
+        self.dad.draw()
+        #Other_sprites_sheet.Dad().dad_list.draw()
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        main_level = MeteorGarden()
+        self.window.show_view(main_level)
+
 
 class MeteorGarden(arcade.View):
 
@@ -98,8 +123,8 @@ class MeteorGarden(arcade.View):
 
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
-    game=MeteorGarden()
-    window.show_view(game)
+    intro=Introduction()
+    window.show_view(intro)
     arcade.run()
 
 
