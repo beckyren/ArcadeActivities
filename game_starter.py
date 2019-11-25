@@ -58,8 +58,8 @@ class Introduction(arcade.View):
         arcade.draw_texture_rectangle(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
-
         self.dad.draw()
+        arcade.draw_text("Well honey I'll leave it to you then.\nDad has faith in you, so good luck!",370,210,arcade.color.BLACK)
         #Other_sprites_sheet.Dad().dad_list.draw()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
