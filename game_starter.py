@@ -9,7 +9,7 @@ WINDOW_HEIGHT = 600
 BACKGROUND_IMG = "images/game_background.png"
 GAME_TITLE = "Meteor Garden"
 GAME_SPEED = 1/60
-character_speed=5
+character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
 
@@ -84,6 +84,7 @@ class MeteorGarden(arcade.View):
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
+
         '''for loop inspired by Paul Vincent Craven's setup from
          http://arcade.academy/examples/sprite_moving_platforms.html#sprite-moving-platforms'''
         for placement in range(10):
@@ -93,18 +94,23 @@ class MeteorGarden(arcade.View):
             self.platform_list.append(wall)
         self.physics=arcade.PhysicsEnginePlatformer(self.character,
                                            self.platform_list,
-                                           gravity_constant=0.25)
+                                           gravity_constant=0.15)
+        self.meteor_list = arcade.SpriteList()
+        self.meteor_list.append(Other_sprites_sheet.Meteor())
+
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
         arcade.draw_texture_rectangle(WINDOW_WIDTH//2, WINDOW_HEIGHT//2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
+        self.meteor_list.draw()
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
         self.physics.update()
+        self.meteor_list.update()
     def on_key_press(self, key, modifiers: int):
         if key==arcade.key.LEFT:
             self.character.change_x=-character_speed

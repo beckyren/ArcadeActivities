@@ -20,7 +20,7 @@ class RedDot(arcade.Sprite):
         self.texture = RED_DOT_IMAGE
         self.center_x = x
         self.center_y = y
-        self.velocity = [random.randint(-4, 4), random.randint(-4, 4)]
+        self.velocity = [0, random.randint(2, 4)]
 
     def update(self):
         super().update()
