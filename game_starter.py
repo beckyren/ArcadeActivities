@@ -107,17 +107,19 @@ class MeteorGarden(arcade.View):
         arcade.draw_texture_rectangle(WINDOW_WIDTH//2, WINDOW_HEIGHT//2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
-        self.meteor_list.draw()
         seconds = int(self.time) % 60
         arcade.draw_text("Time is now:"+str(seconds), 300, 300, arcade.color.BLACK, 30)
+        self.meteor_list.draw()
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
         self.physics.update()
         self.time+=delta_time
-        if self.time<60 and int(self.time)%2==0:
-            self.meteor_list.append(Other_sprites_sheet.Meteor())
+        if self.time < 60 and int(self.time) % 2 == 0:
+            if len(self.meteor_list)<2:
+                self.meteor_list.append(Other_sprites_sheet.Meteor())
+
 
         self.meteor_list.update()
 
@@ -142,6 +144,11 @@ class MeteorGarden(arcade.View):
 
 
 #mouse press:collides with points
+
+class victory(arcade.View):
+    pass
+class gameover(arcade.View):
+    pass
 
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
