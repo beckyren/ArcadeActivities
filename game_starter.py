@@ -12,6 +12,7 @@ GAME_SPEED = 1/60
 character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
+VICTORY_TIME=2000
 
 class Character(arcade.Sprite):
     def __init__(self):
@@ -76,6 +77,9 @@ class MeteorGarden(arcade.View):
         """ Initialize variables """
         super().__init__()
         self.platform_list = None
+        self.time=0.0
+        self.timer=0
+
 
 
 
@@ -101,6 +105,7 @@ class MeteorGarden(arcade.View):
 
 
 
+
     def on_draw(self):
         """ Called when it is time to draw the world """
         arcade.start_render()
@@ -110,18 +115,20 @@ class MeteorGarden(arcade.View):
         seconds = int(self.time) % 60
         arcade.draw_text("Time is now:"+str(seconds), 300, 300, arcade.color.BLACK, 30)
         self.meteor_list.draw()
-
+    def update_timer(self):
+        if self.timer < VICTORY_TIME and self.timer%100==0:
+            self.meteor_list.append(Other_sprites_sheet.Meteor())
+            self.timer+=1
+        else:
+            self.timer+=1
+        print(self.timer)
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
         self.physics.update()
         self.time+=delta_time
-        if self.time < 60 and int(self.time) % 2 == 0:
-            if len(self.meteor_list)<2:
-                self.meteor_list.append(Other_sprites_sheet.Meteor())
-
-
         self.meteor_list.update()
+        self.update_timer()
 
 
 
