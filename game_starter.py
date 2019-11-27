@@ -81,6 +81,7 @@ class MeteorGarden(arcade.View):
 
     def on_show(self):
         """ Setup the game (or reset the game) """
+        self.time=0.0
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
@@ -96,7 +97,9 @@ class MeteorGarden(arcade.View):
                                            self.platform_list,
                                            gravity_constant=0.15)
         self.meteor_list = arcade.SpriteList()
-        self.meteor_list.append(Other_sprites_sheet.Meteor())
+
+
+
 
     def on_draw(self):
         """ Called when it is time to draw the world """
@@ -105,12 +108,22 @@ class MeteorGarden(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         self.meteor_list.draw()
+        seconds = int(self.time) % 60
+        arcade.draw_text("Time is now:"+str(seconds), 300, 300, arcade.color.BLACK, 30)
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
         self.physics.update()
+        self.time+=delta_time
+        if self.time<60 and int(self.time)%2==0:
+            self.meteor_list.append(Other_sprites_sheet.Meteor())
+
         self.meteor_list.update()
+
+
+
+
     def on_key_press(self, key, modifiers: int):
         if key==arcade.key.LEFT:
             self.character.change_x=-character_speed
