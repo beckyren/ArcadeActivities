@@ -136,7 +136,11 @@ class MeteorGarden(arcade.View):
         for meteor in self.meteor_list:
             collision_list1=arcade.check_for_collision_with_list(self.character,self.meteor_list)
             if len(collision_list1)>0:
-                collision_list1[0].remove_from_sprite_lists()
+                for i in range(len(collision_list1)):
+                    if collision_list1[i].bottom>50:
+                        collision_list1[i].remove_from_sprite_lists()
+                    elif collision_list1[i].bottom<50:
+                        self.fallen_list.append(collision_list1[i])
 
 
 
