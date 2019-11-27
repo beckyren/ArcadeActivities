@@ -12,7 +12,7 @@ GAME_SPEED = 1/60
 character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
-VICTORY_TIME=2000
+VICTORY_TIME=3000
 
 class Character(arcade.Sprite):
     def __init__(self):
@@ -116,7 +116,7 @@ class MeteorGarden(arcade.View):
         arcade.draw_text("Time is now:"+str(seconds), 300, 300, arcade.color.BLACK, 30)
         self.meteor_list.draw()
     def update_timer(self):
-        if self.timer < VICTORY_TIME and self.timer%100==0:
+        if self.timer < VICTORY_TIME and self.timer%70==0:
             self.meteor_list.append(Other_sprites_sheet.Meteor())
             self.timer+=1
         else:
