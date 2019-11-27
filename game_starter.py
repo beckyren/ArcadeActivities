@@ -101,6 +101,7 @@ class MeteorGarden(arcade.View):
                                            self.platform_list,
                                            gravity_constant=0.15)
         self.meteor_list = arcade.SpriteList()
+        self.fallen_list=arcade.SpriteList()
 
 
 
@@ -132,7 +133,11 @@ class MeteorGarden(arcade.View):
             self.time=60
         self.meteor_list.update()
         self.update_timer()
-        
+        for meteor in self.meteor_list:
+            collision_list1=arcade.check_for_collision_with_list(self.character,self.meteor_list)
+            if len(collision_list1)>0:
+                collision_list1[0].remove_from_sprite_lists()
+
 
 
 
