@@ -12,7 +12,7 @@ GAME_SPEED = 1/60
 character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
-VICTORY_TIME=3103
+VICTORY_TIME=3236
 
 class Character(arcade.Sprite):
     def __init__(self):
@@ -77,15 +77,16 @@ class MeteorGarden(arcade.View):
         """ Initialize variables """
         super().__init__()
         self.platform_list = None
-        self.time=0.0
+        self.time=0
         self.timer=0
+        self.seconds=0
 
 
 
 
     def on_show(self):
         """ Setup the game (or reset the game) """
-        
+
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
@@ -113,8 +114,8 @@ class MeteorGarden(arcade.View):
         arcade.draw_texture_rectangle(WINDOW_WIDTH//2, WINDOW_HEIGHT//2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
-        seconds = int(self.time) % 60
-        arcade.draw_text("Time is now:"+str(seconds), 300, 300, arcade.color.BLACK, 30)
+
+        arcade.draw_text("Time is now:"+str(self.seconds), 300, 300, arcade.color.BLACK, 30)
         self.meteor_list.draw()
     def update_timer(self):
         if self.timer < VICTORY_TIME and self.timer%70==0:
@@ -123,7 +124,7 @@ class MeteorGarden(arcade.View):
         elif self.timer<VICTORY_TIME and self.timer%70!=0:
             self.timer+=1
         else:
-            self.timer=3103
+            self.timer=VICTORY_TIME
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
@@ -133,6 +134,7 @@ class MeteorGarden(arcade.View):
             self.time=60
         self.meteor_list.update()
         self.update_timer()
+        self.seconds = int(self.time) % 60
         for meteor in self.meteor_list:
             collision_list1 = arcade.check_for_collision_with_list(self.character, self.meteor_list)
             if len(collision_list1)>0 and meteor.bottom>=50:
@@ -172,7 +174,24 @@ class MeteorGarden(arcade.View):
 #mouse press:collides with points
 
 class victory(arcade.View):
-    pass
+    def __init__(self):
+        super().__init__()
+    def on_show(self):
+        self.background=arcade.load_texture(BACKGROUND_IMG)
+        self.character = Character()
+        self.dad = Other_sprites_sheet.Dad().dad
+        self.dad.center_x = 500
+        self.dad.center_y = 120
+
+    def on_draw(self):
+        arcade.start_render()
+        arcade.draw_texture_rectangle(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
+                                      WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
+        self.character.draw()
+        self.dad.draw()
+        arcade.draw_text("Good job, I knew you could do it!", 350, 210,
+                         arcade.color.BLACK)
+
 class gameover(arcade.View):
     def __init__(self):
         super().__init__()
