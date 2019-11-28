@@ -13,6 +13,7 @@ character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
 VICTORY_TIME=3236
+AIRTIME=270
 
 class Character(arcade.Sprite):
     def __init__(self):
@@ -80,6 +81,7 @@ class MeteorGarden(arcade.View):
         self.time=0
         self.timer=0
         self.seconds=0
+        self.bottle_timer=0
 
 
 
@@ -103,6 +105,7 @@ class MeteorGarden(arcade.View):
                                            gravity_constant=0.15)
         self.meteor_list = arcade.SpriteList()
         self.fallen_list=arcade.SpriteList()
+        self.bottle_list=arcade.SpriteList()
 
 
 
@@ -117,12 +120,23 @@ class MeteorGarden(arcade.View):
 
         arcade.draw_text("Time is now:"+str(self.seconds), 300, 300, arcade.color.BLACK, 30)
         self.meteor_list.draw()
+        self.bottle_list.draw()
+        for bottle in self.bottle_list:
+            self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
+            if len(self.collision_list2)>0:
+                if self.bottle_timer<270:
+                    arcade.draw_text("You've obtained 'Leaps and Bounds'!",
+                                 0,550,arcade.color.AFRICAN_VIOLET, font_size=20)
+                self.bottle_timer+=1
     def update_timer(self):
+        if (self.timer<VICTORY_TIME and self.timer>1) and self.timer%1000==0:
+            self.bottle_list.append(Other_sprites_sheet.Bottle())
         if self.timer < VICTORY_TIME and self.timer%70==0:
             self.meteor_list.append(Other_sprites_sheet.Meteor())
             self.timer+=1
         elif self.timer<VICTORY_TIME and self.timer%70!=0:
             self.timer+=1
+
         else:
             self.timer=VICTORY_TIME
     def on_update(self, delta_time):
@@ -135,6 +149,7 @@ class MeteorGarden(arcade.View):
             victory_screen=victory()
             self.window.show_view(victory_screen)
         self.meteor_list.update()
+        self.bottle_list.update()
         self.update_timer()
         self.seconds = int(self.time) % 60
         for meteor in self.meteor_list:
@@ -145,6 +160,10 @@ class MeteorGarden(arcade.View):
                 self.fallen_list.append(meteor)
             elif len(collision_list1)==0 and meteor.bottom<50:
                 self.fallen_list.append(meteor)
+        for bottle in self.bottle_list:
+            self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
+
+
 
         self.fallen_list.update()
 
