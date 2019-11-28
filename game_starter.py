@@ -132,6 +132,8 @@ class MeteorGarden(arcade.View):
         self.time+=delta_time
         if self.time>60:
             self.time=60
+            victory_screen=victory()
+            self.window.show_view(victory_screen)
         self.meteor_list.update()
         self.update_timer()
         self.seconds = int(self.time) % 60
@@ -180,8 +182,9 @@ class victory(arcade.View):
         self.background=arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.dad = Other_sprites_sheet.Dad().dad
-        self.dad.center_x = 500
+        self.dad.center_x = WINDOW_WIDTH
         self.dad.center_y = 120
+
 
     def on_draw(self):
         arcade.start_render()
@@ -189,8 +192,12 @@ class victory(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         self.dad.draw()
-        arcade.draw_text("Good job, I knew you could do it!", 350, 210,
+        if self.dad.center_x==400:
+            arcade.draw_text("Good job, I knew you could do it!", 300, 210,
                          arcade.color.BLACK)
+    def on_update(self, delta_time: float):
+        if self.dad.center_x>400:
+            self.dad.center_x-=2
 
 class gameover(arcade.View):
     def __init__(self):
