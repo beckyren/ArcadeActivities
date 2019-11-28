@@ -85,7 +85,7 @@ class MeteorGarden(arcade.View):
 
     def on_show(self):
         """ Setup the game (or reset the game) """
-        self.time=0.0
+        
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
@@ -133,12 +133,14 @@ class MeteorGarden(arcade.View):
             self.time=60
         self.meteor_list.update()
         self.update_timer()
-        collision_list1 = arcade.check_for_collision_with_list(self.character, self.meteor_list)
-        for i in range(len(collision_list1)):
-            if collision_list1[i].bottom > 50:
-                collision_list1[i].remove_from_sprite_lists()
-            else:
-                self.fallen_list.append(collision_list1[i])
+        for meteor in self.meteor_list:
+            collision_list1 = arcade.check_for_collision_with_list(self.character, self.meteor_list)
+            if len(collision_list1)>0 and meteor.bottom>=50:
+                meteor.remove_from_sprite_lists()
+            elif len(collision_list1)>0 and meteor.bottom<50:
+                self.fallen_list.append(meteor)
+            elif len(collision_list1)==0 and meteor.bottom<50:
+                self.fallen_list.append(meteor)
 
         self.fallen_list.update()
 
