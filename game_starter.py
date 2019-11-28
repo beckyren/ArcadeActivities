@@ -133,14 +133,18 @@ class MeteorGarden(arcade.View):
             self.time=60
         self.meteor_list.update()
         self.update_timer()
-        for meteor in self.meteor_list:
-            collision_list1=arcade.check_for_collision_with_list(self.character,self.meteor_list)
-            if len(collision_list1)>0:
-                for i in range(len(collision_list1)):
-                    if collision_list1[i].bottom>50:
-                        collision_list1[i].remove_from_sprite_lists()
-                    elif collision_list1[i].bottom<50:
-                        self.fallen_list.append(collision_list1[i])
+        collision_list1 = arcade.check_for_collision_with_list(self.character, self.meteor_list)
+        for i in range(len(collision_list1)):
+            if collision_list1[i].bottom > 50:
+                collision_list1[i].remove_from_sprite_lists()
+            else:
+                self.fallen_list.append(collision_list1[i])
+
+        self.fallen_list.update()
+
+        if len(self.fallen_list)>0:
+            game_over=gameover()
+            self.window.show_view(game_over)
 
 
 
@@ -168,7 +172,16 @@ class MeteorGarden(arcade.View):
 class victory(arcade.View):
     pass
 class gameover(arcade.View):
-    pass
+    def __init__(self):
+        super().__init__()
+
+    def on_show(self):
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        arcade.start_render()
+        arcade.draw_text("GAME OVER",250,400,arcade.color.WHEAT,font_size=20)
+
 
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
