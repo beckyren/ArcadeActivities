@@ -12,7 +12,7 @@ GAME_SPEED = 1/60
 character_speed=4
 FACING_RIGHT=0
 FACING_LEFT=1
-VICTORY_TIME=3236
+VICTORY_TIME=3600
 AIRTIME=270
 
 class Character(arcade.Sprite):
@@ -121,13 +121,14 @@ class MeteorGarden(arcade.View):
         arcade.draw_text("Time is now:"+str(self.seconds), 300, 300, arcade.color.BLACK, 30)
         self.meteor_list.draw()
         self.bottle_list.draw()
-        for bottle in self.bottle_list:
-            self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
-            if len(self.collision_list2)>0:
-                if self.bottle_timer<270:
-                    arcade.draw_text("You've obtained 'Leaps and Bounds'!",
-                                 0,550,arcade.color.AFRICAN_VIOLET, font_size=20)
-                self.bottle_timer+=1
+
+
+
+
+
+
+
+
     def update_timer(self):
         if (self.timer<VICTORY_TIME and self.timer>1) and self.timer%1000==0:
             self.bottle_list.append(Other_sprites_sheet.Bottle())
@@ -139,6 +140,8 @@ class MeteorGarden(arcade.View):
 
         else:
             self.timer=VICTORY_TIME
+
+
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
         self.character.update_animation()
@@ -162,6 +165,19 @@ class MeteorGarden(arcade.View):
                 self.fallen_list.append(meteor)
         for bottle in self.bottle_list:
             self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
+            if len(self.collision_list2)>0 :
+                #arcade.draw_text("You've obtained",0,550,arcade.color.BLACK)
+                self.character.center_y=300
+                bottle.remove_from_sprite_lists()
+
+        '''for bottle in self.bottle_list:
+            self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
+            if len(self.collision_list2)>0:
+                bottle.remove_from_sprite_lists()
+
+
+                self.bottle_timer+=1
+                print(self.bottle_timer)'''
 
 
 
