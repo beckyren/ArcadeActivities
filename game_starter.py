@@ -61,11 +61,11 @@ class Introduction(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         self.dad.draw()
-        arcade.draw_text("Your objective is to get rid of meteors\n before they touch the garden\n"
+        arcade.draw_text( "Click to start",50,500,arcade.color.ALABAMA_CRIMSON,font_size=18)
+        arcade.draw_text("Okay honey, your objective for this 60 second test is to\n get rid of meteors before they touch the garden\n"
                        "Just touch the meteors with your wand\n before they touch the garden\n"
-                       "Use up, left, right keys to move \nand collect any falling bottles\n"
-                       "Click to start",50,400,arcade.color.ALABAMA_CRIMSON,font_size=18)
-        arcade.draw_text("I'll be back soon but I'll leave this to you.\nDad has faith in you, so good luck!",350,210,arcade.color.BLACK)
+                       "Use up, left, right keys to move \nand collect the falling 'Leap' potions\n"
+                         "to jump higher. I'm sure you'll pass just fine.\nDad has faith in you, so good luck!",250,210,arcade.color.BLACK)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         main_level = MeteorGarden()
@@ -243,7 +243,7 @@ class gameover(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text("GAME OVER",250,400,arcade.color.WHEAT,font_size=20)
+        arcade.draw_text("GAME OVER\"Oops, you let a meteor slip by and destroy the garden",250,400,arcade.color.WHEAT,font_size=20)
 
 
 def main():
