@@ -243,7 +243,8 @@ class gameover(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text("GAME OVER\"Oops, you let a meteor slip by and destroy the garden",250,400,arcade.color.WHEAT,font_size=20)
+        arcade.draw_text("GAME OVER",250,400,arcade.color.WHEAT,font_size=20)
+        arcade.draw_text("Oops, you let a meteor slip by",165,375,arcade.color.WHEAT,font_size=20)
 
 
 def main():
