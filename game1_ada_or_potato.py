@@ -61,7 +61,8 @@ class Ada_Or_Potato(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.phase=='ada' and button == arcade.MOUSE_BUTTON_LEFT:
-            if (x<self.ada.points[1][0]-10 and x>self.ada.points[0][0]+10) and (y<self.ada.points[3][1]-30 and y>self.ada.points[1][1]+30):
+            if (self.ada.points[1][0] - 10 > x > self.ada.points[0][0] + 10) and (
+                    self.ada.points[3][1] - 30 > y > self.ada.points[1][1] + 30):
                 self.score+=1
                 print("Added 1 to your score\nScore is now: ",str(self.score))
         elif self.phase=='potato' and button ==arcade.MOUSE_BUTTON_LEFT:

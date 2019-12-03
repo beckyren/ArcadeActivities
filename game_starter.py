@@ -174,8 +174,6 @@ class MeteorGarden(arcade.View):
             self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
             if len(self.collision_list2)>0:
                 bottle.remove_from_sprite_lists()
-
-
                 self.bottle_timer+=1
                 print(self.bottle_timer)'''
 
@@ -213,12 +211,18 @@ class MeteorGarden(arcade.View):
 class victory(arcade.View):
     def __init__(self):
         super().__init__()
+        self.Restart_button = arcade.Sprite("images/Button.png", 0.2)
+
     def on_show(self):
         self.background=arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.dad = Other_sprites_sheet.Dad().dad
         self.dad.center_x = WINDOW_WIDTH
         self.dad.center_y = 120
+        self.Restart_button.center_y = WINDOW_HEIGHT / 2
+        self.Restart_button.center_x = WINDOW_WIDTH / 2
+        arcade.set_background_color(arcade.color.BLACK)
+
 
 
     def on_draw(self):
@@ -230,23 +234,45 @@ class victory(arcade.View):
         if self.dad.center_x==400:
             arcade.draw_text("Good job, I knew you could do it!", 300, 210,
                          arcade.color.BLACK)
+            self.Restart_button.draw()
+
     def on_update(self, delta_time: float):
         if self.dad.center_x>400:
             self.dad.center_x-=2
+    def on_mouse_press(self, x, y, button, _modifiers):
+        if button==arcade.MOUSE_BUTTON_LEFT:
+            if (self.Restart_button.points[1][0] > x > self.Restart_button.points[0][0]) and \
+                (self.Restart_button.points[3][1] > y > self.Restart_button.points[1][1]):
+
+                intro = Introduction()
+                self.window.show_view(intro)
 
 class gameover(arcade.View):
     def __init__(self):
         super().__init__()
 
     def on_show(self):
+        self.Restart_button = arcade.Sprite("images/Button.png", 0.2)
+        self.Restart_button.center_y=WINDOW_HEIGHT/2
+        self.Restart_button.center_x=WINDOW_WIDTH/2
         arcade.set_background_color(arcade.color.BLACK)
+
 
     def on_draw(self):
         arcade.start_render()
         arcade.draw_text("GAME OVER",250,400,arcade.color.WHEAT,font_size=20)
         arcade.draw_text("Oops, you let a meteor slip by",165,375,arcade.color.WHEAT,font_size=20)
+        self.Restart_button.draw()
 
 
+
+    def on_mouse_press(self, x, y, button, _modifiers):
+        if button==arcade.MOUSE_BUTTON_LEFT:
+            if (self.Restart_button.points[1][0] > x > self.Restart_button.points[0][0]) and \
+                (self.Restart_button.points[3][1] > y > self.Restart_button.points[1][1]):
+
+                intro = Introduction()
+                self.window.show_view(intro)
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
     intro=Introduction()

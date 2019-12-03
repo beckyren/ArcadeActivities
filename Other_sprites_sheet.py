@@ -1,5 +1,11 @@
 import arcade
 from random import randint
+class Restart_Button(arcade.Sprite):
+    def __init__(self):
+        super().__init__()
+        texture =arcade.load_texture("images/Button.png", scale=0.1)
+        self.textures.append(texture)
+        self.set_texture(0)
 class Dad(arcade.Sprite):
     def __init__(self):
         super().__init__()
