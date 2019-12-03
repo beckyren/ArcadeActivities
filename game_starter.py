@@ -118,7 +118,7 @@ class MeteorGarden(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
 
-        arcade.draw_text("Time is now:"+str(self.seconds), 300, 300, arcade.color.BLACK, 30)
+        arcade.draw_text("Time is now:"+str(self.seconds), 300, 500, arcade.color.BLACK, 30)
         self.meteor_list.draw()
         self.bottle_list.draw()
 
