@@ -61,12 +61,18 @@ class Introduction(arcade.View):
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
         self.character.draw()
         self.dad.draw()
+        if self.dad.center_x <= 400:
+            arcade.draw_text(
+                "Okay honey, your objective for this 60 second test is to\n get rid of meteors before they touch the "
+                "garden\n "
+                "Just touch the meteors with your wand\n before they touch the garden\n"
+                "Dad has faith in you, so good luck!", 250, 210,
+                arcade.color.BLACK)
         arcade.draw_text("Click to start", 50, 500, arcade.color.ALABAMA_CRIMSON, font_size=28)
-        arcade.draw_text(
-            "Okay honey, your objective for this 60 second test is to\n get rid of meteors before they touch the garden\n"
-            "Just touch the meteors with your wand\n before they touch the garden\n"
-            "Dad has faith in you, so good luck!", 250, 210,
-            arcade.color.BLACK)
+
+    def on_update(self, delta_time: float):
+        if self.dad.center_x > 400:
+            self.dad.center_x -= 3
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         main_level = MeteorGarden()
@@ -131,6 +137,7 @@ class MeteorGarden(arcade.View):
 
     def on_update(self, delta_time):
         """ Called every frame of the game (1/GAME_SPEED times per second)"""
+
         self.character.update_animation()
         self.physics.update()
         self.time += delta_time
