@@ -80,7 +80,9 @@ class Introduction(arcade.View):
 
 
 class MeteorGarden(arcade.View):
-
+    '''make a new list for leap potions, remove from collision list but move potion to new list.
+in on keypress function, if key is space bar and len of newlist is >0, character jump 300 pixels and newlist.pop
+to decreas length'''
     def __init__(self):
         """ Initialize variables """
         super().__init__()
