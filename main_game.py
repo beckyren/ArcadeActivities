@@ -161,7 +161,7 @@ class MeteorGarden(arcade.View):
             self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
             if len(self.collision_list2) > 0:
                 arcade.draw_text("Leap Potion", 0, 550, arcade.color.BLACK)
-                #self.character.center_y = 300
+                # self.character.center_y = 300
                 bottle.remove_from_sprite_lists()
                 self.collected_list.append(bottle)
 
@@ -172,9 +172,9 @@ class MeteorGarden(arcade.View):
             self.window.show_view(game_over)
 
     def on_key_press(self, key, modifiers: int):
-        '''make a new list for leap potions, remove from collision list but move potion to new list.
+        """make a new list for leap potions, remove from collision list but move potion to new list.
         in on keypress function, if key is space bar and len of newlist is >0, character jump 300 pixels and newlist.pop
-        to decreas length'''
+        to decrease length"""
         if key == arcade.key.LEFT:
             self.character.change_x = -character_speed
         elif key == arcade.key.RIGHT:
@@ -182,10 +182,9 @@ class MeteorGarden(arcade.View):
         elif key == arcade.key.UP:
             if self.physics.can_jump():
                 self.character.change_y = character_speed
-        elif key== arcade.key.SPACE and len(self.collected_list)>0:
-            self.character.center_y=350
+        elif key == arcade.key.SPACE and len(self.collected_list) > 0:
+            self.character.center_y = 350
             self.collected_list.pop()
-
 
     def on_key_release(self, key, modifiers: int):  # nestnig no
         if key == arcade.key.UP:
@@ -220,6 +219,7 @@ class Victory(arcade.View):
             arcade.draw_text("Good job, I knew you could do it!", 300, 210,
                              arcade.color.BLACK)
             self.Restart_button.draw()
+        arcade.draw_text("SUCCESS",225,400,arcade.color.AMETHYST, font_size=40, font_name='calibri')
 
     def on_update(self, delta_time: float):
         if self.dad.center_x > 400:
