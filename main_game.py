@@ -18,7 +18,7 @@ class Character(arcade.Sprite):
     http://arcade.academy/examples/sprite_face_left_or_right.html """
 
     def __init__(self):
-        """Initialize variables"""
+        """Initialize Character Sprite"""
         super().__init__()
         self.center_x = WINDOW_WIDTH / 2
         self.center_y = WINDOW_HEIGHT / 6
@@ -49,6 +49,7 @@ class Character(arcade.Sprite):
 
 class Introduction(arcade.View):
     """View that is shown at the start of game"""
+
     def __init__(self):
         """initialize variables"""
         super().__init__()
@@ -57,7 +58,6 @@ class Introduction(arcade.View):
         self.dad = Other_sprites_sheet.Dad().dad
         self.dad.center_x = 500
         self.dad.center_y = 120
-
 
     def on_draw(self):
         """make sprites and other visuals appear on screen"""
@@ -71,6 +71,7 @@ class Introduction(arcade.View):
                 "Okay honey, your objective for this 60 second test is to\n get rid of meteors before they touch the "
                 "garden\n "
                 "Just touch the meteors with your wand\n before they touch the garden\n"
+                "Remember to get the green potion to leap higher into the air!\n"
                 "Dad has faith in you, so good luck!", 250, 210,
                 arcade.color.BLACK)
         arcade.draw_text("Click to start", 50, 500, arcade.color.ALABAMA_CRIMSON, font_size=28)
@@ -88,6 +89,7 @@ class Introduction(arcade.View):
 
 class MeteorGarden(arcade.View):
     """Main game view"""
+
     def __init__(self):
         """ Initialize variables and set up game"""
         super().__init__()
@@ -141,7 +143,7 @@ class MeteorGarden(arcade.View):
 
     def on_update(self, delta_time):
         """ Called every frame of the game
-        Manages changing variables"""
+        Manages changing variables in the main game view"""
 
         self.character.update_animation()
         self.physics.update()
@@ -165,8 +167,6 @@ class MeteorGarden(arcade.View):
         for bottle in self.bottle_list:
             self.collision_list2 = arcade.check_for_collision_with_list(self.character, self.bottle_list)
             if len(self.collision_list2) > 0:
-                arcade.draw_text("Leap Potion", 0, 550, arcade.color.BLACK)
-                # self.character.center_y = 300
                 bottle.remove_from_sprite_lists()
                 self.collected_list.append(bottle)
 
@@ -177,7 +177,7 @@ class MeteorGarden(arcade.View):
             self.window.show_view(game_over)
 
     def on_key_press(self, key, modifiers: int):
-        """takes input from keyboard"""
+        """takes input from keyboard and changes position of character sprite"""
         if key == arcade.key.LEFT:
             self.character.change_x = -character_speed
         elif key == arcade.key.RIGHT:
@@ -200,6 +200,7 @@ class MeteorGarden(arcade.View):
 
 class Victory(arcade.View):
     """view shown when player wins game"""
+
     def __init__(self):
         "initialize variables and set up view"
         super().__init__()
@@ -224,7 +225,7 @@ class Victory(arcade.View):
             arcade.draw_text("Good job, I knew you could do it!", 300, 210,
                              arcade.color.BLACK)
             self.Restart_button.draw()
-        arcade.draw_text("SUCCESS",225,400,arcade.color.AMETHYST, font_size=40, font_name='calibri')
+        arcade.draw_text("SUCCESS", 225, 400, arcade.color.AMETHYST, font_size=40, font_name='calibri')
 
     def on_update(self, delta_time: float):
         """manage variable states, in this case location of the dad sprite"""

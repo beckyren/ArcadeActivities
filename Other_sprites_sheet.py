@@ -13,7 +13,7 @@ class Dad(arcade.Sprite):
 class Meteor(arcade.Sprite):
     def __init__(self):
         super().__init__()
-        texture = arcade.load_texture("images/glitch_meteor/meteor0001.png",scale=0.2)
+        texture = arcade.load_texture("images/meteor0001.png",scale=0.2)
         self.textures.append(texture)
         self.set_texture(0)
         self.center_x=randint(10,590)
