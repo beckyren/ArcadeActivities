@@ -13,10 +13,12 @@ VICTORY_TIME = 3600
 
 
 class Character(arcade.Sprite):
-    """code to set texture is from Paul Vincent Craven via
-            http://arcade.academy/examples/sprite_face_left_or_right.html """
+    """Main character class
+    code to set texture is from Paul Vincent Craven via
+    http://arcade.academy/examples/sprite_face_left_or_right.html """
 
     def __init__(self):
+        """Initialize variables"""
         super().__init__()
         self.center_x = WINDOW_WIDTH / 2
         self.center_y = WINDOW_HEIGHT / 6
@@ -28,7 +30,8 @@ class Character(arcade.Sprite):
         self.set_texture(FACING_RIGHT)
 
     def update_animation(self, delta_time: float = 1 / 60):
-        """update_animation function is adapted from Paul Vincent Craven via
+        """Updates location of main character
+        update_animation function is adapted from Paul Vincent Craven via
         http://arcade.academy/examples/sprite_face_left_or_right.html """
         self.center_x += self.change_x
         self.center_y += self.change_y
@@ -45,17 +48,19 @@ class Character(arcade.Sprite):
 
 
 class Introduction(arcade.View):
+    """View that is shown at the start of game"""
     def __init__(self):
+        """initialize variables"""
         super().__init__()
-
-    def on_show(self):
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.dad = Other_sprites_sheet.Dad().dad
         self.dad.center_x = 500
         self.dad.center_y = 120
 
+
     def on_draw(self):
+        """make sprites and other visuals appear on screen"""
         arcade.start_render()
         arcade.draw_texture_rectangle(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
@@ -71,31 +76,29 @@ class Introduction(arcade.View):
         arcade.draw_text("Click to start", 50, 500, arcade.color.ALABAMA_CRIMSON, font_size=28)
 
     def on_update(self, delta_time: float):
+        """update movement of the dad sprite"""
         if self.dad.center_x > 400:
             self.dad.center_x -= 3
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """takes in mouse input and changes views"""
         main_level = MeteorGarden()
         self.window.show_view(main_level)
 
 
 class MeteorGarden(arcade.View):
+    """Main game view"""
     def __init__(self):
-        """ Initialize variables """
+        """ Initialize variables and set up game"""
         super().__init__()
         self.platform_list = None
         self.time = 0
         self.timer = 0
         self.seconds = 0
         self.bottle_timer = 0
-
-    def on_show(self):
-        """ Setup the game (or reset the game) """
-
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.platform_list = arcade.SpriteList()
-
         '''for loop inspired by Paul Vincent Craven's setup from
          http://arcade.academy/examples/sprite_moving_platforms.html#sprite-moving-platforms'''
         for placement in range(10):
@@ -123,7 +126,8 @@ class MeteorGarden(arcade.View):
         self.bottle_list.draw()
 
     def update_timer(self):
-        """self.timer method adapted from Professor Bart"""
+        """self.timer method adapted from Professor Bart
+        keeps track of time and when to drop a meteor """
         if (VICTORY_TIME > self.timer > 1) and self.timer % 1000 == 0:
             self.bottle_list.append(Other_sprites_sheet.Bottle())
         if self.timer < VICTORY_TIME and self.timer % 50 == 0:
@@ -136,7 +140,8 @@ class MeteorGarden(arcade.View):
             self.timer = VICTORY_TIME
 
     def on_update(self, delta_time):
-        """ Called every frame of the game (1/GAME_SPEED times per second)"""
+        """ Called every frame of the game
+        Manages changing variables"""
 
         self.character.update_animation()
         self.physics.update()
@@ -172,9 +177,7 @@ class MeteorGarden(arcade.View):
             self.window.show_view(game_over)
 
     def on_key_press(self, key, modifiers: int):
-        """make a new list for leap potions, remove from collision list but move potion to new list.
-        in on keypress function, if key is space bar and len of newlist is >0, character jump 300 pixels and newlist.pop
-        to decrease length"""
+        """takes input from keyboard"""
         if key == arcade.key.LEFT:
             self.character.change_x = -character_speed
         elif key == arcade.key.RIGHT:
@@ -186,7 +189,8 @@ class MeteorGarden(arcade.View):
             self.character.center_y = 350
             self.collected_list.pop()
 
-    def on_key_release(self, key, modifiers: int):  # nestnig no
+    def on_key_release(self, key, modifiers: int):
+        """keeps track of what to do when keys are released on keyboard"""
         if key == arcade.key.UP:
             self.character.change_y = 0
 
@@ -195,11 +199,11 @@ class MeteorGarden(arcade.View):
 
 
 class Victory(arcade.View):
+    """view shown when player wins game"""
     def __init__(self):
+        "initialize variables and set up view"
         super().__init__()
         self.Restart_button = arcade.Sprite("images/Button.png", 0.2)
-
-    def on_show(self):
         self.background = arcade.load_texture(BACKGROUND_IMG)
         self.character = Character()
         self.dad = Other_sprites_sheet.Dad().dad
@@ -210,6 +214,7 @@ class Victory(arcade.View):
         arcade.set_background_color(arcade.color.BLACK)
 
     def on_draw(self):
+        """make sprites and other visuals appear"""
         arcade.start_render()
         arcade.draw_texture_rectangle(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2,
                                       WINDOW_WIDTH, WINDOW_HEIGHT, self.background)
@@ -222,10 +227,12 @@ class Victory(arcade.View):
         arcade.draw_text("SUCCESS",225,400,arcade.color.AMETHYST, font_size=40, font_name='calibri')
 
     def on_update(self, delta_time: float):
+        """manage variable states, in this case location of the dad sprite"""
         if self.dad.center_x > 400:
             self.dad.center_x -= 2
 
     def on_mouse_press(self, x, y, button, _modifiers):
+        """take mouse input, changes to the Introduction view"""
         if button == arcade.MOUSE_BUTTON_LEFT:
             if (self.Restart_button.points[1][0] > x > self.Restart_button.points[0][0]) and \
                     (self.Restart_button.points[3][1] > y > self.Restart_button.points[1][1]):
@@ -234,22 +241,24 @@ class Victory(arcade.View):
 
 
 class Gameover(arcade.View):
+    """view shown when player loses game"""
     def __init__(self):
+        """initialize and set up view"""
         super().__init__()
         self.Restart_button = arcade.Sprite("images/Button.png", 0.2)
-
-    def on_show(self):
         self.Restart_button.center_y = WINDOW_HEIGHT / 2
         self.Restart_button.center_x = WINDOW_WIDTH / 2
         arcade.set_background_color(arcade.color.BLACK)
 
     def on_draw(self):
+        """make sprites and other visuals appear on screen"""
         arcade.start_render()
         arcade.draw_text("GAME OVER", 250, 400, arcade.color.WHEAT, font_size=20)
         arcade.draw_text("Oops, you let a meteor slip by", 165, 375, arcade.color.WHEAT, font_size=20)
         self.Restart_button.draw()
 
     def on_mouse_press(self, x, y, button, _modifiers):
+        "take in mouse input and change to the Introduction view"
         if button == arcade.MOUSE_BUTTON_LEFT:
             if (self.Restart_button.points[1][0] > x > self.Restart_button.points[0][0]) and \
                     (self.Restart_button.points[3][1] > y > self.Restart_button.points[1][1]):
@@ -258,6 +267,7 @@ class Gameover(arcade.View):
 
 
 def main():
+    """main function"""
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Meteor Game")
     intro = Introduction()
     window.show_view(intro)
