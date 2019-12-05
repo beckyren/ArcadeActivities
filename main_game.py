@@ -70,9 +70,9 @@ class Introduction(arcade.View):
             arcade.draw_text(
                 "Okay honey, your objective for this 60 second test is to\n get rid of meteors before they touch the "
                 "garden\n "
-                "Just touch the meteors with your wand\n before they touch the garden\n"
+                "Just touch the meteors with your wand they touch the garden\n"
                 "Remember to get the green potion to leap higher into the air!\n"
-                "Dad has faith in you, so good luck!", 250, 210,
+                "Dad has faith in you, so good luck!", 210, 210,
                 arcade.color.BLACK)
         arcade.draw_text("Click to start", 50, 500, arcade.color.ALABAMA_CRIMSON, font_size=28)
 
