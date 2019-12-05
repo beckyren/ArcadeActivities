@@ -32,7 +32,9 @@ Name: Becky Ren<br>
 Email: beckyren@udel.edu
 <h3>Acknowledgements</h3>
 <ul>Tiny Speck for<a href="http://www.glitchthegame.com/"> meteor0001.png </a></ul>
-<ul>Paul Vincent Craven for<a href="http://arcade.academy/examples/sprite_moving_platforms.html#sprite-moving-platforms">  platform tutorial, </a>
+<ul>Paul Vincent Craven for<a href="http://arcade.academy/examples/sprite_moving_platforms.html#sprite-moving-platforms"> 
+ platform tutorial, </a>
+ <a href="http://arcade.academy/examples/timer.html?highlight=timer">timer,</a>
 <a href="http://arcade.academy/examples/asteroid_smasher.html">example</a> 
 <a href="http://arcade.academy/examples/platform_tutorial/index.html?highlight=views#platformer-part-eleven">games</a>
 and various other code on <a href="http://arcade.academy/">Arcade Academy</a><br></ul>

@@ -143,8 +143,9 @@ class MeteorGarden(arcade.View):
 
     def on_update(self, delta_time):
         """ Called every frame of the game
-        Manages changing variables in the main game view"""
-
+        Manages changing variables in the main game view
+        code to show passing seconds and to change time from
+        http://arcade.academy/examples/timer.html?highlight=timer"""
         self.character.update_animation()
         self.physics.update()
         self.time += delta_time
